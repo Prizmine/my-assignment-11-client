@@ -6,6 +6,8 @@ import "./index.css";
 import Home from "./Pages/HomePage/Home";
 import AuthProvider from "./Context/AuthProvider";
 import Login from "./Pages/Auth/Login";
+import AuthLayout from "./Pages/Auth/AuthLayout";
+import Register from "./Pages/Auth/Register";
 
 const router = createBrowserRouter([
   {
@@ -13,8 +15,18 @@ const router = createBrowserRouter([
     Component: Home,
     children: [
       {
-        path: "/login",
-        Component: Login,
+        path: "/auth",
+        Component: AuthLayout,
+        children: [
+          {
+            path: "/auth/login",
+            Component: Login,
+          },
+          {
+            path: "/auth/register",
+            Component: Register,
+          },
+        ],
       },
     ],
   },

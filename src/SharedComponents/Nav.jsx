@@ -63,7 +63,7 @@ const Nav = () => {
               className="w-[50px] h-[50px]"
             />
           ) : (
-            <Link to={"/login"} className="btn">
+            <Link to={"/auth/login"} className="btn">
               Login
             </Link>
           )}

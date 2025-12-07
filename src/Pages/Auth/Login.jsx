@@ -1,32 +1,81 @@
-import React from "react";
+import React, { useState } from "react";
 import logo from "../../assets/logo.png";
 import { useForm } from "react-hook-form";
+import { IoMdEye } from "react-icons/io";
+import { FaEyeSlash } from "react-icons/fa";
+import { Link } from "react-router";
 const Login = () => {
+  const [showPassword, setShowPassword] = useState(false);
+
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
-  return (
-    <div className="flex flex-col-reverse gap-15 lg:gap-0 lg:flex-row justify-between">
-      <div className="w-full lg:w-[40%] bg-amber-400 h-[80vh]"></div>
-      <div className="w-full lg:w-[60%] h-[80vh] flex justify-center items-center flex-col">
-        <img src={logo} alt="" className="w-[200px]" />
-        <h2 className="text-5xl font-bold mt-6">Wellcome back</h2>
 
-        <form className="w-[300px] mt-10">
-          <fieldset className="fieldset">
-            <label className="label">Email</label>
-            <input type="email" className="input" placeholder="Email" />
-            <label className="label">Password</label>
-            <input type="password" className="input" placeholder="Password" />
-            <div>
-              <a className="link link-hover">Forgot password?</a>
-            </div>
-            <button className="btn btn-neutral mt-4">Login</button>
-          </fieldset>
-        </form>
-      </div>
+  const handleLogin = (data) => {
+    console.log(data);
+  };
+
+  return (
+    <div className=" flex items-center flex-col">
+      <img src={logo} alt="" className="w-[200px]" />
+      <h2 className="text-5xl font-bold mt-6 text-center">Wellcome back</h2>
+
+      <form onSubmit={handleSubmit(handleLogin)} className="w-[300px] mt-10">
+        <fieldset className="fieldset">
+          <label className="label">Email</label>
+          <input
+            type="email"
+            className="input"
+            placeholder="Email"
+            {...register("email", { required: true })}
+          />
+          {errors.email?.type === "required" && (
+            <p className="text-red-500 font-medium">Email is required</p>
+          )}
+          <label className="label">Password</label>
+          <div className="relative">
+            <input
+              type={showPassword ? "text" : "password"}
+              className="input relative"
+              placeholder="Password"
+              {...register("password", {
+                pattern:
+                  /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/,
+                required: true,
+              })}
+            />
+
+            <button
+              className="btn btn-xs absolute top-[20%] right-2.5 z-10"
+              onClick={() => setShowPassword(!showPassword)}
+            >
+              {showPassword ? <FaEyeSlash /> : <IoMdEye />}
+            </button>
+          </div>
+          {errors.password?.type === "pattern" && (
+            <p className="text-red-500 font-medium">
+              assword must be at least 6 characters long and include an
+              uppercase letter, a lowercase letter, a number, and a special
+              character.
+            </p>
+          )}
+          {errors.password?.type === "required" && (
+            <p className="text-red-500 font-medium">password is required</p>
+          )}
+          <div>
+            <a className="link link-hover">Forgot password?</a>
+          </div>
+          <button className="btn btn-neutral mt-4">Login</button>
+        </fieldset>
+        <p className="font-medium">
+          Don't have an account yet?{" "}
+          <Link to={"/auth/register"} className="text-blue-500 hover:underline">
+            Register
+          </Link>
+        </p>
+      </form>
     </div>
   );
 };

@@ -8,12 +8,19 @@ import AuthProvider from "./Context/AuthProvider";
 import Login from "./Pages/Auth/Login";
 import AuthLayout from "./Pages/Auth/AuthLayout";
 import Register from "./Pages/Auth/Register";
+import HomePage from "./Pages/HomePage/HomePage";
+// import HomePage from "./Pages/HomePage";
 
 const router = createBrowserRouter([
   {
     path: "/",
     Component: Home,
     children: [
+      {
+        index: true,
+        Component: HomePage,
+        loader: () => fetch("/Hero.json").then((res) => res.json()),
+      },
       {
         path: "/auth",
         Component: AuthLayout,

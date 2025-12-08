@@ -17,7 +17,6 @@ const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  
   const asyncAction = async (fn) => {
     try {
       setLoading(true);
@@ -50,11 +49,10 @@ const AuthProvider = ({ children }) => {
     return asyncAction(() => updateProfile(auth.currentUser, profile));
   };
 
-  // ✅ Auth State Observer
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
-      setLoading(false); // ✅ important
+      setLoading(false);
     });
 
     return () => unsubscribe();
@@ -70,6 +68,14 @@ const AuthProvider = ({ children }) => {
     setLoading,
     upDateUserProfile,
   };
+
+  if (loading) {
+    return (
+      <span className="loading loading-spinner loading-xl flex justify-self-center mt-[500px]"></span>
+    );
+  }
+
+  console.log(user);
 
   return (
     <AuthContext.Provider value={authInfo}>{children}</AuthContext.Provider>

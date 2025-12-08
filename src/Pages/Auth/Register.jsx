@@ -4,18 +4,26 @@ import { useForm } from "react-hook-form";
 import { IoMdEye } from "react-icons/io";
 import { FaEyeSlash } from "react-icons/fa";
 import { Link } from "react-router";
+import UseAuth from "../../Hoocks/UseAuth";
 
 const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
-
+  const { registerUser, upDateUserProfile } = UseAuth();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
 
-  const handleLogin = (data) => {
+  const handleRegister = (data) => {
     console.log(data);
+    registerUser(data.email, data.password).then(() => {
+      const updateUser = {
+        displayName: data.name,
+        photoURL: data.photo,
+      };
+      upDateUserProfile(updateUser);
+    });
   };
 
   return (
@@ -23,7 +31,7 @@ const Register = () => {
       <img src={logo} alt="" className="w-[200px]" />
       <h2 className="text-5xl font-bold mt-6 text-center">Wellcome</h2>
 
-      <form onSubmit={handleSubmit(handleLogin)} className="w-[300px] mt-10">
+      <form onSubmit={handleSubmit(handleRegister)} className="w-[300px] mt-10">
         <fieldset className="fieldset">
           <label className="label">Full Name</label>
           <input
@@ -59,6 +67,7 @@ const Register = () => {
             />
 
             <button
+              type="button"
               className="btn btn-xs absolute top-[20%] right-2.5 z-10"
               onClick={() => setShowPassword(!showPassword)}
             >
@@ -67,7 +76,7 @@ const Register = () => {
           </div>
           {errors.password?.type === "pattern" && (
             <p className="text-red-500 font-medium">
-              assword must be at least 6 characters long and include an
+              password must be at least 6 characters long and include an
               uppercase letter, a lowercase letter, a number, and a special
               character.
             </p>
@@ -80,7 +89,7 @@ const Register = () => {
             type="text"
             className="input"
             placeholder="Photo URL"
-            {...register("name")}
+            {...register("photo")}
           />
 
           <button className="btn btn-neutral mt-4">Register</button>

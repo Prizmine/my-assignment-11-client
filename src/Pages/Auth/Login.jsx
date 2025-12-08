@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { IoMdEye } from "react-icons/io";
 import { FaEyeSlash } from "react-icons/fa";
 import { Link } from "react-router";
+import SocialLogin from "./SocialLogin";
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
 
@@ -67,7 +68,9 @@ const Login = () => {
           <div>
             <a className="link link-hover">Forgot password?</a>
           </div>
-          <button className="btn btn-neutral mt-4">Login</button>
+          <button className="btn btn-neutral mt-4 mb-2">Login</button>
+          <p className="text-center font-medium mb-2">--- OR ---</p>
+          <SocialLogin></SocialLogin>
         </fieldset>
         <p className="font-medium">
           Don't have an account yet?{" "}

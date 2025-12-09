@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import Hero from "./Hero/Hero";
 
 const HomePage = () => {
+  const [search, setSearch] = useState("");
+  console.log(search);
   return (
     <div>
-      <Hero></Hero>
+      <Hero setSearch={setSearch}></Hero>
     </div>
   );
 };

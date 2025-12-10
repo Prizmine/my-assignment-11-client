@@ -8,7 +8,7 @@ const Home = () => {
     <div>
       <Nav />
 
-      <main className="w-full md:w-11/12 mx-auto mt-[60px]">
+      <main className="w-full md:w-11/12 mx-auto mt-[60px] ">
         <Outlet></Outlet>
       </main>
 

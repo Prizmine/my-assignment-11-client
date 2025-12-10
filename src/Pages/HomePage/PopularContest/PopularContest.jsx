@@ -103,7 +103,7 @@ const contests = [
 const PopularContest = () => {
   return (
     <div className=" w-11/12 xl:w-9/12 mx-auto mt-[200px]">
-      <h2 className="text-4xl font-bold my-14">Popular Contests</h2>
+      <h2 className="text-5xl font-bold my-14 text-center">Popular Contests</h2>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-9 ">
         {contests.map((contest) => (
           <ContestCard contest={contest} key={contest._id}></ContestCard>

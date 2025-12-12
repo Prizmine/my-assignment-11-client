@@ -14,12 +14,14 @@ import AllContests from "./Pages/AllContests/AllContests";
 import PrivetRoute from "./PrivetRoute/PrivetRoute";
 import ContestDetails from "./Pages/ContestDetails/ContestDetails";
 import UserDashboard from "./Dashboards/UserDashboard/UserDashboard";
+import Error from "./ErrorPage/Error";
 // import HomePage from "./Pages/HomePage";
 const queryClient = new QueryClient();
 const router = createBrowserRouter([
   {
     path: "/",
     Component: Home,
+    errorElement: <Error />,
     children: [
       {
         index: true,

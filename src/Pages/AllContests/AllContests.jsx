@@ -1,5 +1,7 @@
 import React from "react";
 import ContestCard from "../HomePage/PopularContest/ContestCard";
+import UseAxiosSecure from "../../Hoocks/UseAxiosSecure";
+import { useQuery } from "@tanstack/react-query";
 const contests = [
   {
     _id: "c001",
@@ -99,16 +101,27 @@ const contests = [
   },
 ];
 const AllContests = () => {
+  const axiosSecure = UseAxiosSecure();
+
+  const { data } = useQuery({
+    queryKey: ["contests"],
+    queryFn: async () => {
+      const res = await axiosSecure.get("/contests?status=approved");
+      return res.data;
+    },
+  });
+
+  console.log(data);
+
   return (
     <div>
-      <h2 className="text-5xl font-bold text-center mb-14">All Contests</h2>
-      <div className="flex justify-between mt-30 mb-20 w-11/12 xl:w-9/12 mx-auto">
+      <h2 className="text-5xl font-bold text-center mb-5">All Contests</h2>
+      <div className="flex justify-between mt-10 mb-20 w-11/12 xl:w-9/12 mx-auto">
         <div className=""></div>
         <select defaultValue="All" className="select appearance-none">
           <option>All</option>
           <option>Image Design</option>
           <option>Article Writing</option>
-          
         </select>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-9  w-11/12 xl:w-9/12 mx-auto mb-[200px]">

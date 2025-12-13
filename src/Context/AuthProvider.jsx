@@ -104,7 +104,7 @@ const AuthProvider = ({ children }) => {
       <span className="loading loading-spinner loading-xl flex justify-self-center mt-[500px]"></span>
     );
   }
-
+  // console.log(role);
   return (
     <AuthContext.Provider value={authInfo}>{children}</AuthContext.Provider>
   );

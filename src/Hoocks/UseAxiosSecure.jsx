@@ -7,9 +7,11 @@ const axiosSecure = axios.create({
 });
 
 const UseAxiosSecure = () => {
-  const { user, logOut } = UseAuth();
+  const { user, logOut, loading } = UseAuth();
 
   useEffect(() => {
+    if (loading || !user?.accessToken) return;
+    console.log(user.accessToken);
     const requestInterseptor = axiosSecure.interceptors.request.use(
       (config) => {
         config.headers.Authorization = `Bearer ${user?.accessToken}`;
@@ -34,7 +36,7 @@ const UseAxiosSecure = () => {
       axiosSecure.interceptors.request.eject(requestInterseptor);
       axiosSecure.interceptors.response.eject(resInterseptor);
     };
-  }, [user, logOut]);
+  }, [user, logOut, loading]);
 
   return axiosSecure;
 };

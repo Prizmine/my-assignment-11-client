@@ -14,7 +14,7 @@ const ContestDetails = () => {
     },
   });
 
-  console.log(data);
+  // console.log(data);
   return (
     <div className="">
       <div className="p-5 md:p-9 bg-black/70 rounded-3xl w-[70%] mx-auto">

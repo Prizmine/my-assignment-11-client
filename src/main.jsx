@@ -15,6 +15,9 @@ import PrivetRoute from "./PrivetRoute/PrivetRoute";
 import ContestDetails from "./Pages/ContestDetails/ContestDetails";
 import UserDashboard from "./Dashboards/UserDashboard/UserDashboard";
 import Error from "./ErrorPage/Error";
+import CreatorDashboard from "./Dashboards/CreatorDashboard/CreatorDashboard";
+import CreateContest from "./Dashboards/CreatorDashboard/CreateContest";
+import AdminDashboard from "./Dashboards/AdminDashboard/AdminDashboard";
 // import HomePage from "./Pages/HomePage";
 const queryClient = new QueryClient();
 const router = createBrowserRouter([
@@ -54,8 +57,22 @@ const router = createBrowserRouter([
         ),
       },
       {
+        path: "/admin-dashboard",
+        element: <AdminDashboard></AdminDashboard>,
+      },
+      {
         path: "/user-dashboard",
         element: <UserDashboard></UserDashboard>,
+      },
+      {
+        path: "/creator-dashboard",
+        element: <CreatorDashboard></CreatorDashboard>,
+        children: [
+          {
+            path: "/creator-dashboard/create-contest",
+            Component: CreateContest,
+          },
+        ],
       },
     ],
   },

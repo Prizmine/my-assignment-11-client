@@ -2,6 +2,7 @@ import React from "react";
 import Nav from "../../SharedComponents/Nav";
 import { Outlet } from "react-router";
 import Footer from "../../SharedComponents/Footer";
+import { ToastContainer } from "react-toastify";
 
 const Home = () => {
   return (
@@ -13,6 +14,7 @@ const Home = () => {
       </main>
 
       <Footer />
+      <ToastContainer />
     </div>
   );
 };

@@ -10,11 +10,15 @@ import {
   updateProfile,
 } from "firebase/auth";
 import { auth } from "../firebase/firebase.init";
+import { useQuery } from "@tanstack/react-query";
+import UseAxiosSecure from "../Hoocks/UseAxiosSecure";
 
 const googleProvider = new GoogleAuthProvider();
 
 const AuthProvider = ({ children }) => {
+  const axiosSecure = UseAxiosSecure();
   const [user, setUser] = useState(null);
+  const [role, setRole] = useState(null);
   const [loading, setLoading] = useState(true);
 
   const asyncAction = async (fn) => {
@@ -44,7 +48,11 @@ const AuthProvider = ({ children }) => {
   };
 
   const logOut = () => {
-    return asyncAction(() => signOut(auth));
+    return asyncAction(async () => {
+      await signOut(auth);
+      setUser(null);
+      setRole(null);
+    });
   };
 
   const upDateUserProfile = (profile) => {
@@ -57,15 +65,32 @@ const AuthProvider = ({ children }) => {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
+      setRole(null);
       setLoading(false);
     });
 
     return () => unsubscribe();
   }, []);
 
+  const { data: roleData, isLoading: roleLoading } = useQuery({
+    queryKey: ["role", user?.email],
+    enabled: !!user?.email,
+    queryFn: async () => {
+      const res = await axiosSecure.get(`/roles?email=${user.email}`);
+      return res.data;
+    },
+  });
+
+  useEffect(() => {
+    if (roleData?.length > 0) {
+      setRole(roleData[0].role);
+    }
+  }, [roleData]);
+
   const authInfo = {
     user,
-    loading,
+    role,
+    loading: loading || roleLoading,
     registerUser,
     signInUser,
     signInWithGoogle,
@@ -74,13 +99,11 @@ const AuthProvider = ({ children }) => {
     upDateUserProfile,
   };
 
-  if (loading) {
+  if (loading || roleLoading) {
     return (
       <span className="loading loading-spinner loading-xl flex justify-self-center mt-[500px]"></span>
     );
   }
-
-  console.log(user);
 
   return (
     <AuthContext.Provider value={authInfo}>{children}</AuthContext.Provider>

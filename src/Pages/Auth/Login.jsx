@@ -5,7 +5,9 @@ import { IoMdEye } from "react-icons/io";
 import { FaEyeSlash } from "react-icons/fa";
 import { Link } from "react-router";
 import SocialLogin from "./SocialLogin";
+import UseAuth from "../../Hoocks/UseAuth";
 const Login = () => {
+  const { signInUser } = UseAuth();
   const [showPassword, setShowPassword] = useState(false);
 
   const {
@@ -16,6 +18,7 @@ const Login = () => {
 
   const handleLogin = (data) => {
     console.log(data);
+    signInUser(data.email, data.password);
   };
 
   return (

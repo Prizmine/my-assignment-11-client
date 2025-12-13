@@ -5,8 +5,11 @@ import { IoMdEye } from "react-icons/io";
 import { FaEyeSlash } from "react-icons/fa";
 import { Link } from "react-router";
 import UseAuth from "../../Hoocks/UseAuth";
+import UseAxiosSecure from "../../Hoocks/UseAxiosSecure";
+import { toast } from "react-toastify";
 
 const Register = () => {
+  const axiosSecure = UseAxiosSecure();
   const [showPassword, setShowPassword] = useState(false);
   const { registerUser, upDateUserProfile } = UseAuth();
   const {
@@ -16,14 +19,42 @@ const Register = () => {
   } = useForm();
 
   const handleRegister = (data) => {
-    console.log(data);
-    registerUser(data.email, data.password).then(() => {
-      const updateUser = {
-        displayName: data.name,
-        photoURL: data.photo,
-      };
-      upDateUserProfile(updateUser);
-    });
+    registerUser(data.email, data.password)
+      .then(() => {
+        const updateUser = {
+          displayName: data.name,
+          photoURL: data.photo,
+        };
+        upDateUserProfile(updateUser)
+          .then(() => {
+            toast.success("successfully created user");
+          })
+          .catch((err) => {
+            toast.error(err.code);
+          });
+
+        const userInfo = {
+          displayName: data.name,
+          email: data.email,
+          photoUrl: data.photo,
+        };
+
+        axiosSecure
+          .post("/roles", userInfo)
+          .then((res) => {
+            if (res.data.insertedId) {
+              toast.success("successfully inserted user in the database");
+            }
+          })
+          .catch(() => {
+            toast.error(
+              "there was a problem while storing the user in the database"
+            );
+          });
+      })
+      .catch((err) => {
+        toast.error(err.code);
+      });
   };
 
   return (

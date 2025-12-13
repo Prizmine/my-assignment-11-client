@@ -1,7 +1,6 @@
 import axios from "axios";
 import React, { useEffect } from "react";
 import UseAuth from "./UseAuth";
-import { useNavigate } from "react-router";
 
 const axiosSecure = axios.create({
   baseURL: "http://localhost:3000",
@@ -9,7 +8,6 @@ const axiosSecure = axios.create({
 
 const UseAxiosSecure = () => {
   const { user, logOut } = UseAuth();
-  const navigate = useNavigate();
 
   useEffect(() => {
     const requestInterseptor = axiosSecure.interceptors.request.use(
@@ -26,9 +24,7 @@ const UseAxiosSecure = () => {
       (error) => {
         const statusCode = error.status;
         if (statusCode === 401 || statusCode === 403) {
-          logOut().then(() => {
-            navigate("/auth/login");
-          });
+          logOut().then(() => {});
         }
 
         return Promise.reject(error);
@@ -38,7 +34,7 @@ const UseAxiosSecure = () => {
       axiosSecure.interceptors.request.eject(requestInterseptor);
       axiosSecure.interceptors.response.eject(resInterseptor);
     };
-  }, [user, logOut, navigate]);
+  }, [user, logOut]);
 
   return axiosSecure;
 };

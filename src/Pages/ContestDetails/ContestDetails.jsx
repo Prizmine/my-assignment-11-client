@@ -1,27 +1,20 @@
+import { useQuery } from "@tanstack/react-query";
 import React from "react";
 import { useParams } from "react-router";
+import UseAxiosSecure from "../../Hoocks/UseAxiosSecure";
 
 const ContestDetails = () => {
+  const axiosSecure = UseAxiosSecure();
   const { id } = useParams();
-  const data = {
-    _id: "c001",
-    name: "Minimal Logo Design Challenge",
-    image: "https://images.unsplash.com/photo-1527430253228-e93688616381",
-    description:
-      "Create a clean and minimal logo for a fictional tech startup.",
-    price: 200,
-    prize: 3000,
-    taskInstruction:
-      "Submit your logo in PNG format with transparent background.",
-    type: "Image Design",
-    deadline: "2025-12-20T23:59:59",
-    creatorEmail: "creator1@mail.com",
-    participants: 12,
-    winner: null,
-    status: "confirmed",
-  };
+  const { data = {} } = useQuery({
+    queryKey: ["contest", id],
+    queryFn: async () => {
+      const res = await axiosSecure.get(`/contests/${id}`);
+      return res.data;
+    },
+  });
 
-  console.log(id);
+  console.log(data);
   return (
     <div className="">
       <div className="p-5 md:p-9 bg-black/70 rounded-3xl w-[70%] mx-auto">
@@ -39,7 +32,6 @@ const ContestDetails = () => {
             Participants count:{" "}
             <span className="text-yellow-500">{data.participants}</span>
           </p>
-          {/* Full Contest Description & Task details */}
 
           <p className="text-xl">
             <span className="font-bold">Task Details:</span> <br></br>

@@ -1,11 +1,30 @@
 import React from "react";
 import UseAuth from "../../Hoocks/UseAuth";
+import UseAxiosSecure from "../../Hoocks/UseAxiosSecure";
+import { useLocation, useNavigate } from "react-router";
+import { toast } from "react-toastify";
 
 const SocialLogin = () => {
+  const axiosSecure = UseAxiosSecure();
+  const navigate = useNavigate();
+  const location = useLocation();
   const { signInWithGoogle } = UseAuth();
 
   const handleGoogleSignIn = () => {
-    signInWithGoogle();
+    signInWithGoogle()
+      .then((result) => {
+        const userProfile = {
+          email: result.user.email,
+          displayName: result.user.displayName,
+          photoUrl: result.user.photoURL,
+        };
+        axiosSecure
+          .post("/roles", userProfile)
+          .then(() => navigate(location?.state || "/"));
+      })
+      .catch((err) => {
+        toast.error(err.message || "Google sign-in failed");
+      });
   };
 
   return (

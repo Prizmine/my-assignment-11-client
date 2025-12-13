@@ -4,6 +4,7 @@ import { Link, NavLink } from "react-router";
 import defaultUserImage from "../assets/default-user.png";
 import UseAuth from "../Hoocks/UseAuth";
 import { RxCross2, RxDropdownMenu } from "react-icons/rx";
+// import UseAxiosSecure from "../Hoocks/UseAxiosSecure"
 
 const Nav = () => {
   const { user, logOut, loading } = UseAuth();
@@ -16,6 +17,8 @@ const Nav = () => {
 
   const sidebarRef = useRef(null);
   const sidebar2Ref = useRef(null);
+
+  // const axiosSecure= UseAxiosSecure()
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -95,6 +98,8 @@ const Nav = () => {
           <button onClick={handleLogOut} className="btn btn-warning w-[80%]">
             Log Out
           </button>
+
+          {/* <Link to={}>DashBoard</Link> */}
         </div>
       )}
 

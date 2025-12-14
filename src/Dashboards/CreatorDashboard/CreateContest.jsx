@@ -7,6 +7,7 @@ import UseAxiosSecure from "../../Hoocks/UseAxiosSecure";
 import { toast } from "react-toastify";
 
 const CreateContest = () => {
+  const { user } = UseAuth();
   const [selectDate, setSelectDate] = useState(null);
   const { register, handleSubmit } = useForm();
 
@@ -20,6 +21,7 @@ const CreateContest = () => {
 
     data.deadline = selectDate;
     data.createdAt = new Date();
+    data.creatorEmail = user.email;
 
     try {
       const res = await axiosSecure.post("/contests", data);

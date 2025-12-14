@@ -19,6 +19,7 @@ import CreatorDashboard from "./Dashboards/CreatorDashboard/CreatorDashboard";
 import CreateContest from "./Dashboards/CreatorDashboard/CreateContest";
 import AdminDashboard from "./Dashboards/AdminDashboard/AdminDashboard";
 import ManageUsers from "./Dashboards/AdminDashboard/ManageUsers";
+import ManageContests from "./Dashboards/AdminDashboard/ManageContests";
 // import HomePage from "./Pages/HomePage";
 const queryClient = new QueryClient();
 const router = createBrowserRouter([
@@ -68,6 +69,10 @@ const router = createBrowserRouter([
           {
             index: true,
             Component: ManageUsers,
+          },
+          {
+            path: "/admin-dashboard/manage-contests",
+            Component: ManageContests,
           },
         ],
       },

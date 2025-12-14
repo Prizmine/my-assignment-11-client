@@ -5,7 +5,8 @@ import UseAxiosSecure from "../../Hoocks/UseAxiosSecure";
 import defaultImage from "../../assets/default-user.png";
 
 const AdminDashboard = () => {
-  const [active, setActive] = useState(1);
+  const [active, setActive] = useState(0);
+  
 
   const { user, role, loading } = UseAuth();
 
@@ -64,7 +65,7 @@ const AdminDashboard = () => {
                 Manage Users
               </Link>
               <Link
-                to={"/admin-dashboard"}
+                to={"/admin-dashboard/manage-contests"}
                 onClick={() => setActive(2)}
                 className={`${
                   active === 2 && "bg-blue-400/60 shadow-lg"
@@ -77,7 +78,7 @@ const AdminDashboard = () => {
         </div>
       </div>
 
-      <div className="w-full lg:11/12 xl:w-10/12 mx-auto mt-14">
+      <div className="w-full lg:11/12 xl:w-10/12 mx-auto mt-14 mb-14">
         <Outlet></Outlet>
       </div>
     </div>

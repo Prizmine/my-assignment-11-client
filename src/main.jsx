@@ -22,6 +22,8 @@ import ManageUsers from "./Dashboards/AdminDashboard/ManageUsers";
 import ManageContests from "./Dashboards/AdminDashboard/ManageContests";
 import MyContests from "./Dashboards/CreatorDashboard/MyContests";
 import EditContests from "./Dashboards/CreatorDashboard/EditContests";
+import PaymentSuccess from "./Payment/PaymentSuccess";
+import PaymentCanceled from "./Payment/PaymentCanceled";
 // import MyContests from "./Dashboards/CreatorDashboard/MyContests";
 // import HomePage from "./Pages/HomePage";
 const queryClient = new QueryClient();
@@ -34,6 +36,14 @@ const router = createBrowserRouter([
       {
         index: true,
         Component: HomePage,
+      },
+      {
+        path: "/paymentSuccess",
+        Component: PaymentSuccess,
+      },
+      {
+        path: "/paymentCanceled",
+        Component: PaymentCanceled,
       },
       {
         path: "/auth",

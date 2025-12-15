@@ -3,10 +3,12 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router";
 import UseAxiosSecure from "../../Hoocks/UseAxiosSecure";
 import Swal from "sweetalert2";
+import UseAuth from "../../Hoocks/UseAuth";
 
 const ContestDetails = () => {
   const axiosSecure = UseAxiosSecure();
   const { id } = useParams();
+  const { user } = UseAuth();
 
   const [timeLeft, setTimeLeft] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -14,11 +16,32 @@ const ContestDetails = () => {
 
   const { data: contest = {}, isLoading } = useQuery({
     queryKey: ["contest", id],
+    enabled: !!id,
     queryFn: async () => {
       const res = await axiosSecure.get(`/contests/${id}`);
       return res.data;
     },
   });
+
+  const { data: payments = [] } = useQuery({
+    queryKey: ["payments", user?.email],
+    enabled: !!user?.email,
+    queryFn: async () => {
+      const res = await axiosSecure.get(`/payments?email=${user.email}`);
+      return res.data;
+    },
+  });
+
+  const [alreadyPaid, setAlreadyPaid] = useState(null);
+
+  useEffect(() => {
+    if (!contest._id || !user?.email) return;
+    const filtered = payments.filter(
+      (payment) =>
+        payment.email === user.email && payment.contestId === contest._id
+    );
+    setAlreadyPaid(filtered);
+  }, [payments, user?.email, contest._id]);
 
   useEffect(() => {
     if (!contest.deadline) return;
@@ -56,6 +79,28 @@ const ContestDetails = () => {
     }
   };
 
+  const handlePayment = async () => {
+    if (contest && user) {
+      const paymentInfo = {
+        amount: contest.price,
+        contestName: contest.name,
+        userEmail: user.email,
+        contestId: contest._id,
+      };
+
+      localStorage.setItem("contestId", paymentInfo.contestId);
+      localStorage.setItem("contestName", paymentInfo.contestName);
+      localStorage.setItem("amount", paymentInfo.amount);
+
+      const res = await axiosSecure.post(
+        "/create-checkout-session",
+        paymentInfo
+      );
+      window.location.href = res.data.url;
+      console.log(res.data);
+    }
+  };
+
   if (isLoading) return <div className="text-center py-20">Loading...</div>;
 
   const isEnded = timeLeft === "Contest Ended";
@@ -85,7 +130,7 @@ const ContestDetails = () => {
             <div>
               <p className="text-sm text-gray-500 uppercase">Participants</p>
               <p className="text-2xl font-bold text-gray-800 ">
-                {contest.participants || 0}
+                {contest.participantsCount || 0}
               </p>
             </div>
             <div>
@@ -104,7 +149,6 @@ const ContestDetails = () => {
             </div>
           </div>
 
-          {/* ৪. উইনার সেকশন (যদি উইনার থাকে) */}
           {hasWinner && (
             <div className="bg-yellow-50  border-2 border-yellow-400 p-6 rounded-xl mb-8">
               <h2 className="text-2xl font-bold text-yellow-700  mb-4 text-center">
@@ -128,14 +172,19 @@ const ContestDetails = () => {
 
           <div className="flex flex-col md:flex-row gap-4 justify-center">
             <button
-              disabled={isEnded}
+              onClick={handlePayment}
+              disabled={isEnded || (alreadyPaid && alreadyPaid.length > 0)}
               className={`px-10 py-4 rounded-xl font-bold text-white transition-all ${
-                isEnded
+                isEnded || (alreadyPaid && alreadyPaid.length > 0)
                   ? "bg-gray-400 cursor-not-allowed"
                   : "bg-blue-600 hover:bg-blue-700 shadow-lg"
               }`}
             >
-              {isEnded ? "Contest Ended" : "Register / Pay"}
+              {isEnded
+                ? "Contest Ended"
+                : alreadyPaid && alreadyPaid.length > 0
+                ? "Already Registered"
+                : "Register / Pay"}
             </button>
 
             {!isEnded && (

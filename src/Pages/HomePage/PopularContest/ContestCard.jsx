@@ -5,7 +5,7 @@ const ContestCard = ({ contest }) => {
     _id,
     name = "",
     type = "",
-    participants = 0,
+    participantsCount = 0,
     taskInstruction = "",
     prize = 0,
   } = contest;
@@ -29,7 +29,7 @@ const ContestCard = ({ contest }) => {
         <div className="flex justify-between items-center text-sm text-gray-600">
           <span className="px-2 py-1 bg-blue-100 rounded-full">{type}</span>
 
-          <span className="font-semibold">👥 {participants} joined</span>
+          <span className="font-semibold">👥 {participantsCount} joined</span>
         </div>
 
         <p className="text-gray-500 text-sm">

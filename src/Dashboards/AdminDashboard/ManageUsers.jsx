@@ -42,14 +42,15 @@ const ManageUsers = () => {
   };
 
   return (
-    <div className="bg-white rounded-2xl p-9 min-h-[70vh]">
-      <h4>Manage Users</h4>
+    <div className="bg-white rounded-2xl p-6 md:p-9 min-h-[70vh]">
+      <h4 className="text-2xl font-bold mb-6 text-center">Manage Users</h4>
 
-      <div className="overflow-x-auto">
+      {/* ================= DESKTOP TABLE ================= */}
+      <div className="hidden md:block overflow-x-auto">
         <table className="table">
           <thead>
             <tr>
-              <th></th>
+              <th>#</th>
               <th>Name</th>
               <th>Email</th>
               <th>Role</th>
@@ -59,7 +60,7 @@ const ManageUsers = () => {
 
           <tbody>
             {data.map((singleUser, index) => {
-              const modalId = `modal_${singleUser._id}`;
+              const modalId = `modal_desktop_${singleUser._id}`;
 
               return (
                 <tr key={singleUser._id}>
@@ -77,18 +78,18 @@ const ManageUsers = () => {
                       <MdOutlineArrowDropDownCircle />
                     </button>
 
-                    <dialog id={modalId} className="modal">
-                      <div className="modal-box w-[50%]">
+                    <dialog id={modalId} className="modal modal-middle">
+                      <div className="modal-box">
                         <h3 className="font-bold text-lg">Manage User</h3>
 
                         <div className="mt-4">
-                          <p className="text-lg">
+                          <p className="text-lg break-all">
                             Change role of: {singleUser.email}
                           </p>
 
                           <select
                             defaultValue={singleUser.role || "user"}
-                            className="select mt-2"
+                            className="select mt-2 w-full"
                             onChange={(e) =>
                               handleRoleChange(singleUser._id, e.target.value)
                             }
@@ -100,8 +101,8 @@ const ManageUsers = () => {
                         </div>
 
                         <div className="modal-action">
-                          <form method="dialog">
-                            <button className="btn">Close</button>
+                          <form method="dialog" className="w-full">
+                            <button className="btn w-full">Close</button>
                           </form>
                         </div>
                       </div>
@@ -112,6 +113,74 @@ const ManageUsers = () => {
             })}
           </tbody>
         </table>
+      </div>
+
+      {/* ================= MOBILE CARDS ================= */}
+      <div className="grid grid-cols-1 gap-4 md:hidden">
+        {data.map((singleUser) => {
+          const modalId = `modal_mobile_${singleUser._id}`;
+
+          return (
+            <div
+              key={singleUser._id}
+              className="border rounded-xl p-4 shadow bg-base-100"
+            >
+              <div className="mb-2">
+                <h3 className="font-bold text-lg">{singleUser.displayName}</h3>
+                <p className="text-sm text-gray-500 break-all">
+                  {singleUser.email}
+                </p>
+              </div>
+
+              <p className="text-sm mb-3">
+                <strong>Role:</strong>{" "}
+                <span className="badge badge-outline">
+                  {singleUser.role || "user"}
+                </span>
+              </p>
+
+              <button
+                className="btn btn-sm btn-outline w-full"
+                onClick={() => document.getElementById(modalId).showModal()}
+              >
+                Manage Role
+              </button>
+
+              <dialog
+                id={modalId}
+                className="modal modal-bottom sm:modal-middle"
+              >
+                <div className="modal-box">
+                  <h3 className="font-bold text-lg">Manage User</h3>
+
+                  <div className="mt-4">
+                    <p className="text-lg break-all">
+                      Change role of: {singleUser.email}
+                    </p>
+
+                    <select
+                      defaultValue={singleUser.role || "user"}
+                      className="select mt-2 w-full"
+                      onChange={(e) =>
+                        handleRoleChange(singleUser._id, e.target.value)
+                      }
+                    >
+                      <option value="admin">Admin</option>
+                      <option value="creator">Creator</option>
+                      <option value="user">User</option>
+                    </select>
+                  </div>
+
+                  <div className="modal-action">
+                    <form method="dialog" className="w-full">
+                      <button className="btn w-full">Close</button>
+                    </form>
+                  </div>
+                </div>
+              </dialog>
+            </div>
+          );
+        })}
       </div>
     </div>
   );

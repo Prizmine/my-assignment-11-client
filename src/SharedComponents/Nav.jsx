@@ -64,10 +64,8 @@ const Nav = () => {
 
   const links = (
     <>
-      <NavLink to={"/"}>home</NavLink>
+      <NavLink to={"/"}>Home</NavLink>
       <NavLink to={"/all-contests"}>All Contests</NavLink>
-      <NavLink to={"/"}>home</NavLink>
-      <NavLink to={"/"}>home</NavLink>
     </>
   );
 

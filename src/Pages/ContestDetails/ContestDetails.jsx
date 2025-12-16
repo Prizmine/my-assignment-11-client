@@ -32,7 +32,26 @@ const ContestDetails = () => {
     },
   });
 
+  const { data: submitions = [], refetch } = useQuery({
+    queryKey: ["submition", user],
+    enabled: !!user?.email,
+    queryFn: async () => {
+      const res = await axiosSecure.get(`/submissions?email=${user.email}`);
+      return res.data;
+    },
+  });
+
   const [alreadyPaid, setAlreadyPaid] = useState(null);
+  const [alreadySubmited, setAlreadySubmited] = useState(null);
+  useEffect(() => {
+    if (!contest._id || !user?.email) return;
+    const filtered = submitions.filter(
+      (submition) =>
+        submition.userEmail === user.email &&
+        submition.contestId === contest._id
+    );
+    setAlreadySubmited(filtered);
+  }, [submitions, user?.email, contest._id]);
 
   useEffect(() => {
     if (!contest._id || !user?.email) return;
@@ -69,13 +88,25 @@ const ContestDetails = () => {
 
   const handleTaskSubmit = async (e) => {
     e.preventDefault();
-    try {
-      // await axiosSecure.post('/submissions', { contestId: id, taskLink });
-      Swal.fire("Success!", "Your task has been submitted.", "success");
-      setIsModalOpen(false);
-      setTaskLink("");
-    } catch (error) {
-      Swal.fire("Error", "Something went wrong!", "error", error.code);
+    if (user && contest) {
+      const submition = {
+        taskLink: taskLink,
+        contestId: contest._id,
+        userEmail: user.email,
+        userName: user.displayName,
+        userPhoto: user.photoURL,
+        winingPrize: contest.prize,
+      };
+
+      try {
+        await axiosSecure.post("/submissions", submition);
+        Swal.fire("Success!", "Your task has been submitted.", "success");
+        setIsModalOpen(false);
+        setTaskLink("");
+        refetch();
+      } catch (error) {
+        Swal.fire("Error", "Something went wrong!", "error", error.message);
+      }
     }
   };
 
@@ -104,8 +135,9 @@ const ContestDetails = () => {
   if (isLoading) return <div className="text-center py-20">Loading...</div>;
 
   const isEnded = timeLeft === "Contest Ended";
-  const hasWinner = contest.winnerName && contest.winnerImage;
-
+  // const hasWinner = contest.winnerName && contest.winnerImage;
+  const isPaid = alreadyPaid && alreadyPaid.length > 0;
+  const isSubmited = alreadySubmited && alreadySubmited.length > 0;
   return (
     <div className="min-h-screen py-10 px-4 ">
       <div className="max-w-4xl mx-auto bg-white  rounded-2xl shadow-xl overflow-hidden">
@@ -149,7 +181,7 @@ const ContestDetails = () => {
             </div>
           </div>
 
-          {hasWinner && (
+          {/* {hasWinner && (
             <div className="bg-yellow-50  border-2 border-yellow-400 p-6 rounded-xl mb-8">
               <h2 className="text-2xl font-bold text-yellow-700  mb-4 text-center">
                 🏆 Winner Declared! 🏆
@@ -168,7 +200,7 @@ const ContestDetails = () => {
                 </div>
               </div>
             </div>
-          )}
+          )} */}
 
           <div className="flex flex-col md:flex-row gap-4 justify-center">
             <button
@@ -187,14 +219,17 @@ const ContestDetails = () => {
                 : "Register / Pay"}
             </button>
 
-            {!isEnded && (
-              <button
-                onClick={() => setIsModalOpen(true)}
-                className="px-10 py-4 rounded-xl font-bold bg-green-500 hover:bg-green-600 text-white shadow-lg transition-all"
-              >
-                Submit Task
-              </button>
-            )}
+            <button
+              onClick={() => setIsModalOpen(true)}
+              disabled={!isPaid || isSubmited || isEnded}
+              className={`px-10 py-4 rounded-xl font-bold text-white shadow-lg transition-all ${
+                !isPaid || isSubmited || isEnded
+                  ? "bg-gray-400 cursor-not-allowed"
+                  : "bg-green-500 hover:bg-green-600"
+              }`}
+            >
+              Submit Task
+            </button>
           </div>
         </div>
       </div>

@@ -24,6 +24,7 @@ import MyContests from "./Dashboards/CreatorDashboard/MyContests";
 import EditContests from "./Dashboards/CreatorDashboard/EditContests";
 import PaymentSuccess from "./Payment/PaymentSuccess";
 import PaymentCanceled from "./Payment/PaymentCanceled";
+import SeeSubmitions from "./Dashboards/CreatorDashboard/SeeSubmitions";
 // import MyContests from "./Dashboards/CreatorDashboard/MyContests";
 // import HomePage from "./Pages/HomePage";
 const queryClient = new QueryClient();
@@ -116,6 +117,10 @@ const router = createBrowserRouter([
           {
             path: "/creator-dashboard/edit-contest/:id",
             Component: EditContests,
+          },
+          {
+            path: "/creator-dashboard/see-submitions/:contestId",
+            Component: SeeSubmitions,
           },
         ],
       },

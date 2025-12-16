@@ -121,7 +121,6 @@ const MyContests = () => {
         </div>
       ) : (
         <>
-          {/* ================= DESKTOP TABLE ================= */}
           <div className="hidden md:block bg-base-100 rounded-lg shadow-xl">
             <table className="table table-zebra w-full">
               <thead className="bg-primary text-white">
@@ -207,7 +206,6 @@ const MyContests = () => {
             </table>
           </div>
 
-          {/* ================= MOBILE CARDS ================= */}
           <div className="grid grid-cols-1 gap-4 md:hidden">
             {contests.map((contest) => (
               <div

@@ -26,6 +26,8 @@ import PaymentSuccess from "./Payment/PaymentSuccess";
 import PaymentCanceled from "./Payment/PaymentCanceled";
 import SeeSubmitions from "./Dashboards/CreatorDashboard/SeeSubmitions";
 import MyParticipations from "./Dashboards/UserDashboard/MyParticipations";
+import MyWin from "./Dashboards/UserDashboard/MyWin";
+import MyProfile from "./Dashboards/UserDashboard/MyProfile";
 // import MyContests from "./Dashboards/CreatorDashboard/MyContests";
 // import HomePage from "./Pages/HomePage";
 const queryClient = new QueryClient();
@@ -102,6 +104,14 @@ const router = createBrowserRouter([
           {
             index: true,
             Component: MyParticipations,
+          },
+          {
+            path: "my-wins",
+            Component: MyWin,
+          },
+          {
+            path: "my-profile",
+            Component: MyProfile,
           },
         ],
       },

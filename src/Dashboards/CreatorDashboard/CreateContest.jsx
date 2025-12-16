@@ -44,7 +44,6 @@ const CreateContest = () => {
         </h3>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {/* Left Column */}
           <div className="flex flex-col gap-5">
             <input
               type="text"
@@ -77,7 +76,6 @@ const CreateContest = () => {
             ></textarea>
           </div>
 
-          {/* Right Column */}
           <div className="flex flex-col gap-5">
             <label className="label font-semibold">Contest Type</label>
             <select
@@ -88,10 +86,14 @@ const CreateContest = () => {
               <option value="" disabled>
                 Select Contest Type
               </option>
-              <option value="Game Testing">Game Testing</option>
-              <option value="Designing">Designing</option>
+              <option value="All">All</option>
+              <option value="Writing">Writing</option>
+              <option value="UiUxDesign">UI/UX Design</option>
               <option value="Creation">Creation</option>
               <option value="Gaming">Gaming</option>
+              <option value="GameReview">Game review</option>
+              <option value="ArticleWriting">Article Writing</option>
+              <option value="ImageDesign">Image Design</option>
             </select>
 
             <label className="label font-semibold">Set Deadline</label>

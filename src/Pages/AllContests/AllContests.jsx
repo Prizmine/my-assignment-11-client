@@ -1,134 +1,99 @@
-import React from "react";
+import React, { useState } from "react";
 import ContestCard from "../HomePage/PopularContest/ContestCard";
 import UseAxiosSecure from "../../Hoocks/UseAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
-// const contests = [
-//   {
-//     _id: "c001",
-//     name: "Minimal Logo Design Challenge",
-//     image: "https://images.unsplash.com/photo-1527430253228-e93688616381",
-//     description:
-//       "Create a clean and minimal logo for a fictional tech startup.",
-//     price: 200,
-//     prize: 3000,
-//     taskInstruction:
-//       "Submit your logo in PNG format with transparent background.",
-//     type: "Image Design",
-//     deadline: "2025-12-20T23:59:59",
-//     creatorEmail: "creator1@mail.com",
-//     participants: 12,
-//     winner: null,
-//     status: "confirmed",
-//   },
-//   {
-//     _id: "c002",
-//     name: "Technology Article Writing",
-//     image: "https://images.unsplash.com/photo-1519389950473-47ba0277781c",
-//     description: "Write a 1000-word article about AI trends in 2025.",
-//     price: 150,
-//     prize: 2500,
-//     taskInstruction: "Submit your article as a Google Drive link.",
-//     type: "Article Writing",
-//     deadline: "2025-12-25T18:00:00",
-//     creatorEmail: "creator2@mail.com",
-//     participants: 8,
-//     winner: {
-//       name: "Rahul Mazumder",
-//       photo: "https://randomuser.me/api/portraits/men/32.jpg",
-//     },
-//     status: "confirmed",
-//   },
-//   {
-//     _id: "c003",
-//     name: "Best Gaming Review",
-//     image: "https://images.unsplash.com/photo-1511512578047-dfb367046420",
-//     description: "Review any PC game released in 2024–2025.",
-//     price: 100,
-//     prize: 1500,
-//     taskInstruction: "Submit a YouTube link or blog link.",
-//     type: "Gaming Review",
-//     deadline: "2025-12-15T20:30:00",
-//     creatorEmail: "creator3@mail.com",
-//     participants: 20,
-//     winner: null,
-//     status: "pending",
-//   },
-//   {
-//     _id: "c004",
-//     name: "Business Idea Pitch",
-//     image: "https://images.unsplash.com/photo-1551836022-d5d88e9218df",
-//     description:
-//       "Pitch a creative business idea with a clear problem-solution fit.",
-//     price: 300,
-//     prize: 5000,
-//     taskInstruction: "Upload a PDF or provide a Notion link.",
-//     type: "Business Idea",
-//     deadline: "2025-12-30T23:59:59",
-//     creatorEmail: "creator1@mail.com",
-//     participants: 4,
-//     winner: null,
-//     status: "rejected",
-//   },
-//   {
-//     _id: "c005",
-//     name: "Short Story Competition",
-//     image: "https://images.unsplash.com/photo-1519681393784-d120267933ba",
-//     description: "Write a compelling short story under 800 words.",
-//     price: 50,
-//     prize: 800,
-//     taskInstruction: "Submit story in Google Docs format.",
-//     type: "Writing",
-//     deadline: "2025-12-18T12:00:00",
-//     creatorEmail: "creator4@mail.com",
-//     participants: 15,
-//     winner: null,
-//     status: "confirmed",
-//   },
-//   {
-//     _id: "c006",
-//     name: "UI/UX Mobile App Design",
-//     image: "https://images.unsplash.com/photo-1551650975-87deedd944c3",
-//     description: "Design a modern mobile UI for a fitness app.",
-//     price: 250,
-//     prize: 4000,
-//     taskInstruction: "Submit Figma link or exported screens.",
-//     type: "UI/UX Design",
-//     deadline: "2025-12-22T17:45:00",
-//     creatorEmail: "creator2@mail.com",
-//     participants: 9,
-//     winner: null,
-//     status: "confirmed",
-//   },
-// ];
+
+const ITEMS_PER_PAGE = 9;
+
 const AllContests = () => {
   const axiosSecure = UseAxiosSecure();
 
-  const { data: contests = [] } = useQuery({
-    queryKey: ["contests"],
+  const [currentPage, setCurrentPage] = useState(1);
+  const [category, setCategory] = useState("All");
+
+  const { data = {}, isLoading } = useQuery({
+    queryKey: ["approvedContests", currentPage, category],
     queryFn: async () => {
-      const res = await axiosSecure.get("/approved-contests?status=approved");
+      const res = await axiosSecure.get(
+        `/approved-contests?status=approved&page=${currentPage}&limit=${ITEMS_PER_PAGE}${
+          category !== "All" ? `&category=${category}` : ""
+        }`
+      );
       return res.data;
     },
+    keepPreviousData: true,
   });
 
-  // console.log(data);
+  const contests = data.contests || [];
+  const totalPages = Math.ceil((data.totalCount || 0) / ITEMS_PER_PAGE);
+
+  const handleCategoryChange = (e) => {
+    setCategory(e.target.value);
+    setCurrentPage(1);
+  };
+
+  if (isLoading) {
+    return <p className="text-center mt-20">Loading...</p>;
+  }
 
   return (
     <div>
       <h2 className="text-5xl font-bold text-center mb-5">All Contests</h2>
-      <div className="flex justify-between mt-10 mb-20 w-11/12 xl:w-9/12 mx-auto">
-        <div className=""></div>
-        <select defaultValue="All" className="select appearance-none">
-          <option>All</option>
-          <option>Image Design</option>
-          <option>Article Writing</option>
+
+      <div className="flex justify-end mt-10 mb-10 w-11/12 xl:w-9/12 mx-auto">
+        <select
+          value={category}
+          onChange={handleCategoryChange}
+          className="select select-bordered w-52"
+        >
+          <option value="All">All</option>
+          <option value="Writing">Writing</option>
+          <option value="UiUxDesign">UI/UX Design</option>
+          <option value="Creation">Creation</option>
+          <option value="Gaming">Gaming</option>
+          <option value="GameReview">Game review</option>
+          <option value="ArticleWriting">Article Writing</option>
+          <option value="ImageDesign">Image Design</option>
         </select>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-9  w-11/12 xl:w-9/12 mx-auto mb-[200px]">
+
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-9 w-11/12 xl:w-9/12 mx-auto mb-16">
         {contests.map((contest) => (
-          <ContestCard contest={contest} key={contest._id}></ContestCard>
+          <ContestCard key={contest._id} contest={contest} />
         ))}
       </div>
+
+      {totalPages > 1 && (
+        <div className="flex justify-center gap-2 mb-[200px]">
+          <button
+            className="btn btn-outline"
+            disabled={currentPage === 1}
+            onClick={() => setCurrentPage(currentPage - 1)}
+          >
+            Prev
+          </button>
+
+          {[...Array(totalPages).keys()].map((page) => (
+            <button
+              key={page}
+              onClick={() => setCurrentPage(page + 1)}
+              className={`btn ${
+                currentPage === page + 1 ? "btn-primary" : "btn-outline"
+              }`}
+            >
+              {page + 1}
+            </button>
+          ))}
+
+          <button
+            className="btn btn-outline"
+            disabled={currentPage === totalPages}
+            onClick={() => setCurrentPage(currentPage + 1)}
+          >
+            Next
+          </button>
+        </div>
+      )}
     </div>
   );
 };

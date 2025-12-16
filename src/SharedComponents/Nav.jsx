@@ -64,8 +64,26 @@ const Nav = () => {
 
   const links = (
     <>
-      <NavLink to={"/"}>Home</NavLink>
-      <NavLink to={"/all-contests"}>All Contests</NavLink>
+      <NavLink
+        to={"/"}
+        className={({ isActive }) =>
+          `px-2 py-1 rounded-lg ${
+            isActive ? "bg-blue-500/50 shadow-xl" : "hover:bg-blue-100/50"
+          }`
+        }
+      >
+        Home
+      </NavLink>
+      <NavLink
+        className={({ isActive }) =>
+          `px-2 py-1 rounded-lg ${
+            isActive ? "bg-blue-500/50 shadow-xl" : "hover:bg-blue-100/50"
+          }`
+        }
+        to={"/all-contests"}
+      >
+        All Contests
+      </NavLink>
     </>
   );
 

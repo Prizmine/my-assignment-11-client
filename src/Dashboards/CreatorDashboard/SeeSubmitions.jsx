@@ -37,6 +37,7 @@ const SeeSubmitions = () => {
         image: item.userPhoto,
         prize: item.winingPrize,
         contestId: item.contestId,
+        contestName: item.name,
       };
 
       const res = await axiosSecure.post("/winners", winnerDetails);

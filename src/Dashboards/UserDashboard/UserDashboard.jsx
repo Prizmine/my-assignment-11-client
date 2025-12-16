@@ -67,7 +67,7 @@ const UserDashboard = () => {
             </NavLink>
 
             <NavLink
-              to="/user-dashboard/my-wins"
+              to="/user-dashboard/my-profile"
               className={({ isActive }) =>
                 `px-5 py-2 rounded-lg ${
                   isActive ? "bg-blue-500/50 shadow-xl" : "hover:bg-blue-100/50"
@@ -80,25 +80,11 @@ const UserDashboard = () => {
 
           <hr className="my-6" />
 
-          <div className="flex flex-col gap-3 mt-auto">
-            <p className="text-sm font-semibold mb-2.5 text-center">
-              Quick Stats
-            </p>
-            <div className="flex flex-col gap-3">
-              <div className="w-full h-[100px] bg-purple-600/20 flex justify-center items-center flex-col gap-2 rounded-lg">
-                <p className="font-medium">Participations</p>
-                <p className="text-lg font-bold">{participations.length}</p>
-              </div>
-              <div className="w-full h-[100px] bg-green-600/20 flex justify-center items-center flex-col gap-2 rounded-lg">
-                <p className="font-medium">Wins</p>
-                <p className="text-lg font-bold">{wins.length}</p>
-              </div>
-            </div>
-          </div>
+          
         </aside>
 
         <main className="bg-white rounded-2xl shadow-md p-6 min-h-[400px]">
-          <Outlet context={{ participations, wins, user }} />
+          <Outlet context={{ participations, wins }} />
         </main>
       </div>
     </div>

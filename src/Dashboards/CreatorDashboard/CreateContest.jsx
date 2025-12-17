@@ -86,7 +86,6 @@ const CreateContest = () => {
               <option value="" disabled>
                 Select Contest Type
               </option>
-              <option value="All">All</option>
               <option value="Writing">Writing</option>
               <option value="UiUxDesign">UI/UX Design</option>
               <option value="Creation">Creation</option>

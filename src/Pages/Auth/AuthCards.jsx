@@ -3,8 +3,19 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/effect-cards";
 import { Autoplay, EffectCards } from "swiper/modules";
+import UseAxiosSecure from "../../Hoocks/UseAxiosSecure";
+import { useQuery } from "@tanstack/react-query";
 
 const AuthCards = () => {
+  const axiosSecure = UseAxiosSecure();
+
+  const { data: winners = [] } = useQuery({
+    queryKey: ["winners"],
+    queryFn: async () => {
+      const res = await axiosSecure.get("/recent-winners");
+      return res.data;
+    },
+  });
   return (
     <div>
       <Swiper
@@ -12,21 +23,21 @@ const AuthCards = () => {
         grabCursor={true}
         loop={true}
         autoplay={{
-          delay: 4000,
+          delay: 3000,
           disableOnInteraction: false,
         }}
         modules={[EffectCards, Autoplay]}
         className="mySwiper authcards"
       >
-        <SwiperSlide className="authSlide">Slide 1</SwiperSlide>
-        <SwiperSlide className="authSlide">Slide 2</SwiperSlide>
-        <SwiperSlide className="authSlide">Slide 3</SwiperSlide>
-        <SwiperSlide className="authSlide">Slide 4</SwiperSlide>
-        <SwiperSlide className="authSlide">Slide 5</SwiperSlide>
-        <SwiperSlide className="authSlide">Slide 6</SwiperSlide>
-        <SwiperSlide className="authSlide">Slide 7</SwiperSlide>
-        <SwiperSlide className="authSlide">Slide 8</SwiperSlide>
-        <SwiperSlide className="authSlide">Slide 9</SwiperSlide>
+        {winners.map((winner, index) => (
+          <SwiperSlide key={index} className="authSlide">
+            <img
+              src={winner.image}
+              className="w-full h-full object-cover"
+              alt=""
+            />
+          </SwiperSlide>
+        ))}
       </Swiper>
     </div>
   );

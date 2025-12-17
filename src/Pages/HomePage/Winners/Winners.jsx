@@ -20,6 +20,8 @@ const Winners = () => {
     },
   });
 
+  const defaultUserImgageUrl = "../../../assets/default-user.png";
+
   return (
     <section className="relative py-24 lg:py-40 ">
       <div className="container mx-auto px-4 w-full xl:w-10/12">
@@ -101,7 +103,9 @@ const Winners = () => {
                     <div
                       className="w-full h-full rounded-full border-4 border-blue-500 shadow-2xl shadow-blue-400/70 transition-all duration-500 hover:scale-105"
                       style={{
-                        backgroundImage: `url(${winner.image})`,
+                        backgroundImage: `url(${
+                          winner.image || defaultUserImgageUrl
+                        })`,
                         backgroundSize: "cover",
                         backgroundPosition: "center",
                         backgroundRepeat: "no-repeat",

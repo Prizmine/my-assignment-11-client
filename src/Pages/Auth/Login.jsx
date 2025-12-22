@@ -26,7 +26,12 @@ const Login = () => {
 
   return (
     <div className=" flex items-center flex-col">
-      <img src={logo} alt="" className="w-[200px]" />
+      <img
+        src={logo}
+        alt=""
+        className={`w-[200px] bg-white p-1.5 rounded-4xl
+        `}
+      />
       <h2 className="text-5xl font-bold mt-6 text-center">Wellcome back</h2>
 
       <form onSubmit={handleSubmit(handleLogin)} className="w-[300px] mt-10">
@@ -75,7 +80,7 @@ const Login = () => {
           <div>
             <a className="link link-hover">Forgot password?</a>
           </div>
-          <button className="btn btn-neutral mt-4 mb-2">Login</button>
+          <button className="btn mt-4 mb-2 bg-base-100">Login</button>
           <p className="text-center font-medium mb-2">--- OR ---</p>
           <SocialLogin></SocialLogin>
         </fieldset>

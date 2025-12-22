@@ -39,7 +39,7 @@ const UserDashboard = () => {
       <h2 className="text-4xl font-bold text-center mb-10">User Dashboard</h2>
 
       <div className="grid grid-cols-1 lg:grid-cols-[minmax(240px,260px)_1fr] gap-5 lg:gap-6 xl:gap-8">
-        <aside className="bg-white rounded-2xl shadow-md p-6 flex flex-col">
+        <aside className="bg-base-100 rounded-2xl shadow-md p-6 flex flex-col">
           <h3 className="text-xl font-semibold mb-6 text-center">User Menu</h3>
 
           <nav className="flex flex-col gap-3">
@@ -83,7 +83,7 @@ const UserDashboard = () => {
           
         </aside>
 
-        <main className="bg-white rounded-2xl shadow-md p-6 min-h-[400px]">
+        <main className="bg-base-100 rounded-2xl shadow-md p-6 min-h-[400px]">
           <Outlet context={{ participations, wins }} />
         </main>
       </div>

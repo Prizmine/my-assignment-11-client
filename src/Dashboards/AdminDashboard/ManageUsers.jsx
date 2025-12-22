@@ -42,7 +42,7 @@ const ManageUsers = () => {
   };
 
   return (
-    <div className="bg-white rounded-2xl p-6 md:p-9 min-h-[70vh]">
+    <div className="bg-base-100 rounded-2xl p-6 md:p-9 min-h-[70vh]">
       <h4 className="text-2xl font-bold mb-6 text-center">Manage Users</h4>
 
       {/* ================= DESKTOP TABLE ================= */}

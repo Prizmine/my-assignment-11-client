@@ -36,7 +36,7 @@ const AdminDashboard = () => {
       </h2>
 
       <div className="w-full lg:11/12 xl:w-10/12 mx-auto">
-        <div className="bg-white rounded-2xl p-5 mt-14 max-w-[600px]">
+        <div className="bg-base-100 rounded-2xl p-5 mt-14 max-w-[600px]">
           <div className="flex items-center gap-6 flex-col md:flex-row ">
             <img
               src={user?.photoURL || defaultImage}

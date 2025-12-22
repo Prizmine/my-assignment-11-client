@@ -151,7 +151,7 @@ const ContestDetails = () => {
   const isSubmited = alreadySubmited && alreadySubmited.length > 0;
   return (
     <div className="min-h-screen py-10 px-4 ">
-      <div className="max-w-4xl mx-auto bg-white  rounded-2xl shadow-xl overflow-hidden">
+      <div className="max-w-4xl mx-auto bg-base-100  rounded-2xl shadow-xl overflow-hidden">
         <div className="relative h-64 md:h-96">
           <img
             src={contest.image}
@@ -167,26 +167,26 @@ const ContestDetails = () => {
           <h1 className="text-3xl md:text-5xl font-bold text-blue-600 mb-4">
             {contest.name}
           </h1>
-          <p className="text-gray-600  text-lg mb-6">{contest.description}</p>
+          <p className="  text-lg mb-6">{contest.description}</p>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 border-y py-6 my-6 border-gray-200">
             <div>
-              <p className="text-sm text-gray-500 uppercase">Participants</p>
-              <p className="text-2xl font-bold text-gray-800 ">
+              <p className="text-sm  uppercase">Participants</p>
+              <p className="text-2xl font-bold  ">
                 {contest.participantsCount || 0}
               </p>
             </div>
             <div>
-              <p className="text-sm text-gray-500 uppercase">Prize Money</p>
+              <p className="text-sm  uppercase">Prize Money</p>
               <p className="text-2xl font-bold text-green-600">
                 ${contest.prize}
               </p>
             </div>
             <div className="md:col-span-2">
-              <p className="text-sm text-gray-500 uppercase font-bold mb-2">
+              <p className="text-sm  uppercase font-bold mb-2">
                 Task Instruction
               </p>
-              <p className="bg-blue-50 p-4 rounded-lg italic">
+              <p className="bg-blue-50 text-black p-4 rounded-lg italic">
                 {contest.taskInstruction}
               </p>
             </div>
@@ -205,9 +205,7 @@ const ContestDetails = () => {
                 />
                 <div>
                   <p className="text-xl font-bold ">{winner.name}</p>
-                  <p className="text-gray-500">
-                    Won the prize of ${winner.prize}
-                  </p>
+                  <p className="">Won the prize of ${winner.prize}</p>
                 </div>
               </div>
             </div>
@@ -249,7 +247,7 @@ const ContestDetails = () => {
 
       {isModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
-          <div className="bg-white  w-full max-w-md p-6 rounded-2xl shadow-2xl animate-fade-in">
+          <div className="bg-base-100  w-full max-w-md p-6 rounded-2xl shadow-2xl animate-fade-in">
             <h2 className="text-2xl font-bold mb-4 ">Submit Your Task</h2>
             <form onSubmit={handleTaskSubmit}>
               <textarea
@@ -263,7 +261,7 @@ const ContestDetails = () => {
                 <button
                   type="button"
                   onClick={() => setIsModalOpen(false)}
-                  className="px-6 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300"
+                  className="px-6 py-2 bg-gray-200  rounded-lg hover:bg-gray-300"
                 >
                   Cancel
                 </button>

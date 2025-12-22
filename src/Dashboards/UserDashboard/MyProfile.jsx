@@ -38,7 +38,7 @@ const MyProfile = () => {
 
   return (
     <div className="space-y-8">
-      <div className="bg-white rounded-2xl shadow-md p-6 flex flex-col md:flex-row gap-6 items-center">
+      <div className="bg-base-100 rounded-2xl shadow-md p-6 flex flex-col md:flex-row gap-6 items-center">
         <img
           src={user?.photoURL}
           alt="profile"
@@ -51,7 +51,7 @@ const MyProfile = () => {
         </div>
       </div>
 
-      <div className="bg-white rounded-2xl shadow-md p-6">
+      <div className="bg-base-100 rounded-2xl shadow-md p-6">
         <h3 className="text-xl font-semibold mb-4">Winning Statistics</h3>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -81,7 +81,7 @@ const MyProfile = () => {
         </div>
       </div>
 
-      <div className="bg-white rounded-2xl shadow-md p-6">
+      <div className="bg-base-100 rounded-2xl shadow-md p-6">
         <h3 className="text-xl font-semibold mb-4">Update Profile</h3>
 
         <form onSubmit={handleUpdateProfile} className="space-y-4">

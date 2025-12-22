@@ -19,7 +19,7 @@ const MyParticipations = () => {
 
       {/* ================= DESKTOP TABLE ================= */}
       <div className="hidden xl:block overflow-x-auto">
-        <table className="min-w-full bg-white rounded-xl shadow-md overflow-hidden">
+        <table className="min-w-full  rounded-xl shadow-md overflow-hidden">
           <thead className="bg-blue-50">
             <tr>
               <th className="py-3 px-4 text-left text-sm font-semibold text-gray-600">
@@ -40,7 +40,7 @@ const MyParticipations = () => {
             {participations.map((item) => (
               <tr
                 key={item._id}
-                className="border-b hover:bg-gray-50 transition"
+                className="border-b hover:bg-gray-50 transition hover:text-black"
               >
                 <td className="py-3 px-4 font-medium">{item.contestName}</td>
                 <td className="py-3 px-4 wrap-break-word">
@@ -51,7 +51,7 @@ const MyParticipations = () => {
                 </td>
                 <td
                   className={`py-3 px-4 flex items-center justify-center ${
-                    item.paymentStatus === "paid" ? "bg-green-300" : ""
+                    item.paymentStatus === "paid" ? "bg-green-300 text-green-900" : ""
                   }`}
                 >
                   {item.paymentStatus}

@@ -26,11 +26,11 @@ const Winners = () => {
     <section className="relative py-24 lg:py-40 ">
       <div className="container mx-auto px-4 w-full xl:w-10/12">
         <div className="text-center mb-16 lg:mb-24 relative z-10">
-          <h2 className="text-4xl sm:text-5xl font-extrabold text-gray-800 tracking-tight relative inline-block">
-            <span className="absolute inset-x-0 bottom-0 h-2 bg-amber-400/50 transform -skew-x-12"></span>
+          <h2 className="text-4xl sm:text-5xl font-extrabold tracking-tight relative inline-block">
+            {/* <span className="absolute inset-x-0 bottom-0 h-2 bg-amber-400/50 transform -skew-x-12"></span> */}
             <span className="relative">Recent Winners</span>
           </h2>
-          <p className="text-lg text-gray-500 mt-4 max-w-2xl mx-auto">
+          <p className="text-lg  mt-4 max-w-2xl mx-auto">
             Celebrate our top champions! Their skill and dedication secured
             their victory—and yours could be next.
           </p>

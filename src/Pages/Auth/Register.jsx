@@ -61,7 +61,12 @@ const Register = () => {
 
   return (
     <div className=" flex items-center flex-col">
-      <img src={logo} alt="" className="w-[200px]" />
+      <img
+        src={logo}
+        alt=""
+        className={`w-[200px] bg-white p-1.5 rounded-4xl
+        `}
+      />
       <h2 className="text-5xl font-bold mt-6 text-center">Wellcome</h2>
 
       <form onSubmit={handleSubmit(handleRegister)} className="w-[300px] mt-10">
@@ -125,7 +130,7 @@ const Register = () => {
             {...register("photo")}
           />
 
-          <button className="btn btn-neutral mt-4">Register</button>
+          <button className="btn mt-4 bg-base-100">Register</button>
         </fieldset>
         <p className="font-medium">
           Already have an account?{" "}

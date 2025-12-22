@@ -17,9 +17,8 @@ const MyWin = () => {
     <div className="p-4 md:p-6">
       <h2 className="text-2xl font-bold mb-6">My Wins</h2>
 
-      
       <div className="hidden md:block overflow-x-auto">
-        <table className="min-w-full bg-white rounded-xl shadow-md overflow-hidden">
+        <table className="min-w-full bg-base-100 rounded-xl shadow-md overflow-hidden">
           <thead className="bg-green-50">
             <tr>
               <th className="py-3 px-4 text-left text-sm font-semibold text-gray-600">
@@ -44,7 +43,7 @@ const MyWin = () => {
             {wins.map((win) => (
               <tr
                 key={win._id}
-                className="border-b hover:bg-gray-50 transition"
+                className="border-b hover:bg-gray-50 hover:text-black transition"
               >
                 <td className="py-3 px-4">
                   <img
@@ -60,7 +59,7 @@ const MyWin = () => {
                   {win.prize}
                 </td>
 
-                <td className="py-3 px-4 text-sm text-gray-600 break-all max-w-[220px]">
+                <td className="py-3 px-4 text-sm  break-all max-w-[220px]">
                   {win.contestName}
                 </td>
 
@@ -73,7 +72,6 @@ const MyWin = () => {
         </table>
       </div>
 
-      
       <div className="grid grid-cols-1 gap-4 md:hidden">
         {wins.map((win) => (
           <div

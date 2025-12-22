@@ -33,7 +33,7 @@ const CreatorDashboard = () => {
       </h2>
 
       <div className="grid grid-cols-1 lg:grid-cols-[260px_1fr] gap-8">
-        <aside className="bg-white rounded-2xl shadow-md p-6">
+        <aside className="bg-base-100 rounded-2xl shadow-md p-6">
           <h3 className="text-xl font-semibold mb-6 text-center">
             Creator Menu
           </h3>
@@ -64,7 +64,7 @@ const CreatorDashboard = () => {
           </nav>
         </aside>
 
-        <main className="bg-white rounded-2xl shadow-md p-6 min-h-[400px]">
+        <main className="bg-base-100 rounded-2xl shadow-md p-6 min-h-[400px]">
           <Outlet />
         </main>
       </div>

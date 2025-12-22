@@ -10,6 +10,17 @@ const Nav = () => {
   const [dashboardRoute, setDashboardRoute] = useState("");
   const { user, logOut, loading, role } = UseAuth();
 
+  const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
+
+  useEffect(() => {
+    document.documentElement.setAttribute("data-theme", theme);
+    localStorage.setItem("theme", theme);
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme(theme === "light" ? "dark" : "light");
+  };
+
   useEffect(() => {
     if (!user || !role) return;
 
@@ -124,7 +135,7 @@ const Nav = () => {
   }
 
   return (
-    <nav className="w-full mt-0 md:mt-8 md:w-11/12 md:rounded-xl mx-auto flex justify-around h-20 items-center z-50 bg-white shadow-sm">
+    <nav className="w-full mt-0 md:mt-8 md:w-11/12 md:rounded-xl mx-auto flex justify-around h-20 items-center z-50 bg-base-100 shadow-sm">
       {showSidebar && <div className="fixed inset-0 z-10 bg-black/60 "></div>}
       <div
         ref={sidebarRef}
@@ -140,7 +151,7 @@ const Nav = () => {
       {user && (
         <div
           ref={sidebar2Ref}
-          className={`w-[200px] flex flex-col gap-4 items-center z-50 shadow-2xl rounded-xl absolute top-20 right-0  md:right-[100px] md:top-28 h-[400px] p-[22px] bg-white transition-all duration-200 ${
+          className={`w-[200px] flex flex-col gap-4 items-center z-50 shadow-2xl rounded-xl absolute top-20 right-0  md:right-[100px] md:top-28 h-[400px] p-[22px] bg-base-100/50 transition-all duration-200 ${
             showRightSidebar
               ? "opacity-100 translate-x-0 scale-100 pointer-events-auto"
               : "opacity-0 translate-x-full scale-0 pointer-events-none"
@@ -167,11 +178,21 @@ const Nav = () => {
               Dashboard
             </Link>
           )}
+
+          <button onClick={toggleTheme} className="btn btn-sm rounded-full">
+            {theme === "light" ? "🌙 Dark" : "☀️ Light"}
+          </button>
         </div>
       )}
 
       <div className="flex items-center">
-        <img src={NavLogo} alt="" className="w-[120px] md:w-[150px] h-auto" />
+        <img
+          src={NavLogo}
+          alt=""
+          className={`w-[120px] md:w-[150px] h-auto ${
+            theme === "dark" ? "bg-white p-1.5 rounded-4xl" : ""
+          }`}
+        />
         <button
           onClick={() => setShowSidebar(!showSidebar)}
           className="mr-14 h-auto md:hidden ml-2.5 text-2xl"
